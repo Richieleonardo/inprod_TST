@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat App</title>
+  <link rel="stylesheet" href="/style.css" />
+  
+</head>
+<body>
+  <div id="main-container">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div id="id-container">
+        <h3>Your ID:</h3>
+        <p id="your-id">Unknown</p>
+      </div>
+      <button id="search-button">Search for People to Chat</button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+      <div id="others-id"></div>
+      <!-- Message Container -->
+      <div id="message-container"></div>
+
+      <!-- Form -->
+      <form id="form">
+        <div>
+          <label for="message-input">Message:</label>
+          <input type="text" id="message-input"  />
+          <button type="submit" id="send-button">Send</button>
+        </div>
+        <div></div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/src/chat.js"></script>
+  <script>
+    (async function() {const token = localStorage.getItem('token');
+      if (!token) {
+          alert('You are not logged in. Redirecting to login page.');
+          window.location.href = '/login.html'; // Redirect to login page
+          return;
+      }
+    
+      try {
+          const response = await fetch('http://localhost:3000/auth/chat', {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`, // Include the token
+              },
+          });
+    
+          if (response.ok) {
+              // Token is valid, user can access the chat page
+              const data = await response.json();
+          } else {
+              // Token invalid or expired
+              alert('Session expired or unauthorized access. Please log in again.');
+              window.location.href = 'login.html';
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred while accessing the chat page.');
+          window.location.href = 'login.html';
+      }
+    })(); 
+  </script>
+</body>
+</html>
