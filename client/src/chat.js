@@ -33,14 +33,14 @@ socket.on('recieve-message', message => {
 //to send message
 form.addEventListener("submit", e => {
   e.preventDefault();
-  const message = messageInput.value;;
+  const message = messageInput.value;
 
   if (message === ""){
     return;
   }
 
   displayMessage(message);
-  socket.emit('send-message', message, storedID);
+  socket.emit('send-message', message, storedID); //TODO implement decrypt
   messageInput.value = "";
 })
 

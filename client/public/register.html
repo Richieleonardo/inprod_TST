@@ -8,11 +8,11 @@
     <body>
         <h2>User Registration</h2>
         <form action="/register" method="post">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br><br>
-            
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required><br><br>
             
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br><br>
@@ -24,20 +24,22 @@
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const email = form.email.value;
-                const username = form.username.value;
+                const name = form.username.value;
                 const password = form.password.value;
-                const response = await fetch('http://localhost:3000/register', {
+                const response = await fetch('http://localhost:3000/auth/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email, username, password }),
+                    body: JSON.stringify({ name, email, password }),
                 });
                 const data = await response.json();
-                if (data.status === 'ok') {
+                
+                if (response.ok) {
                     alert('User registered successfully');
-                    window.location.href = '/login';
+                    window.location.href = 'login.html';
                 } else {
+                    console.error(data)
                     alert(data.error);
                 }
             });

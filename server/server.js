@@ -28,7 +28,7 @@ io.on('connection', socket => {
 
     //TODO
     socket.on('send-message', (message, storedID) => {
-        socket.broadcast.to(storedID).emit('recieve-message', message);
+        socket.broadcast.to(storedID).emit('recieve-message', message); //TODO implement encrypt
     })
 });
 
