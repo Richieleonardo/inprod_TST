@@ -80,7 +80,7 @@ router.post(
                 expiresIn: '1h',
             });
 
-            res.status(200).json({ message: 'Login successful', token }); //token is sent inside the body (might be useful later)
+            res.status(200).json({ message: 'Login successful', token, userId: user.id }); //token is sent inside the body (might be useful later)
         } catch (error) {
             res.status(500).json({ message: 'Server error', error });
         }

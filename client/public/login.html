@@ -32,7 +32,8 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    localStorage.setItem('token', data.token);
+                    sessionStorage.setItem('token', data.token);
+                    sessionStorage.setItem('userId', data.userId);
                     window.location.href = 'chat.html';
                     alert('User logged in successfully');
                 } else {
